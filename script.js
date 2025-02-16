@@ -68,34 +68,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Smooth scrolling for navigation
-    const lenis = new Lenis({
-        lerp: 0.1,
-        smoothWheel: true,
-        infinite: false,
-        touchMultiplier: 2,
-    });
-
-    function raf(time) {
-        lenis.raf(time);
-        requestAnimationFrame(raf);
-    }
-
-    requestAnimationFrame(raf);
-
-    // Add these event listeners
-    lenis.on('scroll', (e) => {
-        // Optional: Sync scroll position with native scroll
-        window.scrollTo(0, e.animatedScroll);
-    });
-
-    // Update your existing nav link click handlers
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', (e) => {
+        anchor.addEventListener('click', function (e) {
             e.preventDefault();
-            lenis.scrollTo(anchor.getAttribute('href'), {
-                offset: -80, // Adjust for fixed header height
-                duration: 1.5
-            });
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+
+            // Close mobile menu if open
+            if(menuOpen) {
+                navLinks.classList.remove('active');
+                menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                menuOpen = false;
+            }
         });
     });
 
@@ -219,4 +210,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Call this after DOMContentLoaded
     enableSmoothScroll();
+
+    // Prevent body scroll issues on mobile
+    document.body.addEventListener('touchmove', function(e) {
+        // Allow scroll on elements that need it
+        if (e.target.closest('.scrollable')) return;
+        
+        // Prevent unwanted scroll behavior
+        if (!e.target.closest('.needs-scroll')) {
+            e.preventDefault();
+        }
+    }, { passive: false });
 });

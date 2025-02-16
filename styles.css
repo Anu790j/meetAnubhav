@@ -42,11 +42,66 @@
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-html {
-    height: 100%;
+/* Reset scroll behavior */
+html, body {
+    margin: 0;
+    padding: 0;
     overflow-x: hidden;
-    scroll-behavior: auto !important; /* Disable native smooth scroll */
-    overscroll-behavior: none;
+    position: relative;
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+}
+
+/* Prevent elastic scroll on iOS */
+body {
+    position: fixed;
+    overflow-y: scroll;
+    width: 100%;
+    height: 100%;
+}
+
+/* Ensure sections fill viewport properly */
+.section {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Prevent content from causing unwanted scroll */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+/* Hero section specific fixes */
+.hero {
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* Mobile specific adjustments */
+@media (max-width: 768px) {
+    body {
+        overflow-x: hidden !important;
+    }
+    
+    .section {
+        overflow: hidden;
+    }
+    
+    /* Prevent pull-to-refresh on mobile */
+    html {
+        overscroll-behavior-y: none;
+        touch-action: pan-y;
+    }
 }
 
 body {
@@ -60,8 +115,6 @@ body {
     min-height: 100dvh;
     display: flex;
     flex-direction: column;
-    touch-action: pan-y;
-    -webkit-overflow-scrolling: touch;
 }
 
 /* Custom Cursor */
@@ -95,7 +148,6 @@ body {
     padding: 2rem 0;
     max-width: 100%;
     overflow-x: hidden;
-    overscroll-behavior: contain;
 }
 
 /* Navbar Styles */
@@ -529,17 +581,6 @@ nav {
 }
 
 /* Hero Section */
-.hero {
-    height: 100dvh;
-    min-height: -webkit-fill-available;
-    overflow: hidden;
-    padding-right: 1px; /* Prevent scrollbar jump */
-    display: flex;
-    align-items: center;
-    background: var(--background-color);
-    position: relative;
-}
-
 .hero-content {
     max-width: 1200px;
     margin: 0 auto;
@@ -549,8 +590,6 @@ nav {
     justify-content: space-between;
     position: relative;
     z-index: 1;
-    transform: translateZ(0);
-    backface-visibility: hidden;
 }
 
 .hero-text {
@@ -1530,11 +1569,4 @@ footer {
     html {
         scroll-behavior: smooth;
     }
-}
-
-/* Force hardware acceleration */
-.hero-content,
-.projects-grid {
-    transform: translateZ(0);
-    backface-visibility: hidden;
 }
