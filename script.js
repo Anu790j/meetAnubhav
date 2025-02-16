@@ -187,4 +187,21 @@ document.addEventListener('DOMContentLoaded', () => {
             overlay.style.opacity = '0';
         });
     });
+
+    // Add this to your existing script.js
+    function enableSmoothScroll() {
+        // Check if we're on a touch device
+        if ('ontouchstart' in window) {
+            document.body.style.overflow = 'hidden';
+            document.documentElement.style.overflow = 'hidden';
+            
+            setTimeout(() => {
+                document.body.style.overflow = 'auto';
+                document.documentElement.style.overflow = 'auto';
+            }, 500);
+        }
+    }
+
+    // Call this after DOMContentLoaded
+    enableSmoothScroll();
 });
