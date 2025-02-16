@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Typed.js for logo
     new Typed('.typed-logo', {
-        strings: ['Anubhav'],
+        strings: [' Anubhav'],
         typeSpeed: 150,
         showCursor: false
     });
