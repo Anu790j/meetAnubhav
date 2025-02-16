@@ -45,7 +45,6 @@
 html {
     height: 100%;
     overflow-x: hidden;
-    scroll-behavior: smooth;
 }
 
 body {
@@ -54,7 +53,6 @@ body {
     color: var(--text-color);
     background-color: var(--background-color);
     overflow-x: hidden;
-    position: relative;
     min-height: 100vh;
     min-height: 100dvh;
     display: flex;
@@ -90,8 +88,6 @@ body {
     margin: 0 auto;
     max-width: 1200px;
     padding: 2rem 0;
-    max-width: 100%;
-    overflow-x: hidden;
 }
 
 /* Navbar Styles */
@@ -526,14 +522,14 @@ nav {
 
 /* Hero Section */
 .hero {
-    height: 100dvh;
-    min-height: -webkit-fill-available;
-    overflow: hidden;
-    padding-right: 1px; /* Prevent scrollbar jump */
+    height: 100vh;
+    height: 100dvh; /* Use dynamic viewport height */
+    min-height: -webkit-fill-available; /* For mobile browsers */
     display: flex;
     align-items: center;
     background: var(--background-color);
     position: relative;
+    overflow: hidden;
 }
 
 .hero-content {
@@ -1516,12 +1512,5 @@ footer {
     .achievements-grid {
         grid-template-columns: 1fr;
         gap: 1.5rem;
-    }
-}
-
-/* Smooth scroll behavior */
-@media (prefers-reduced-motion: no-preference) {
-    html {
-        scroll-behavior: smooth;
     }
 }
