@@ -68,19 +68,34 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Smooth scrolling for navigation
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            document.querySelector(this.getAttribute('href')).scrollIntoView({
-                behavior: 'smooth'
-            });
+    const lenis = new Lenis({
+        lerp: 0.1,
+        smoothWheel: true,
+        infinite: false,
+        touchMultiplier: 2,
+    });
 
-            // Close mobile menu if open
-            if(menuOpen) {
-                navLinks.classList.remove('active');
-                menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
-                menuOpen = false;
-            }
+    function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+
+    // Add these event listeners
+    lenis.on('scroll', (e) => {
+        // Optional: Sync scroll position with native scroll
+        window.scrollTo(0, e.animatedScroll);
+    });
+
+    // Update your existing nav link click handlers
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', (e) => {
+            e.preventDefault();
+            lenis.scrollTo(anchor.getAttribute('href'), {
+                offset: -80, // Adjust for fixed header height
+                duration: 1.5
+            });
         });
     });
 
